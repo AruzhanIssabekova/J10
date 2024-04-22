@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HW10</title>
+    <style>
+        body {font-family: Arial, sans-serif; background-color: #f4f4f4;margin: 0;padding: 20px; }
+        .c { max-width: 600px; margin: 0 auto; background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);}
+        h1, p {text-align: center;}
+        input[type="number"] {width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 5px; border: 1px solid #ccc; box-sizing: border-box;}
+        button {display: block; width: 100%; padding: 10px; background-color: #007bff; color: #fff; border: none; border-radius: 5px;  cursor: pointer; transition: background-color 0.3s ease;}
+        button:hover {background-color: #0056b3;}
+        #factDisplay {margin-top: 20px;padding: 10px;  border-radius: 5px; border: 1px solid #ccc;background-color: #f9f9f9;}
+    </style>
+</head>
+<body>
+    <div class="c">
+        <h1>Факты о числах</h1>
+        <p>Введите число, чтобы узнать интересный факт о нем:</p>
+        <input type="number" id="numberInput">
+        <button onclick="getNumberFact()">Получить факт</button>
+        <div id="factDisplay"></div>
+    </div>
+
+    <script>
+        function getNumberFact() {
+            const number = document.getElementById('numberInput').value;
+            const apiUrl = `http://numbersapi.com/${number}?json`;
+
+            fetch(apiUrl)
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    }
+                    throw new Error('Ошибка при получении факта');
+                })
+                .then(data => {
+                    document.getElementById('factDisplay').innerHTML = `<p>${data.text}</p>`;
+                })
+                .catch(error => {
+                    document.getElementById('factDisplay').innerHTML = `<p>Ошибка: ${error.message}</p>`;
+                });
+        }
+    </script>
+</body>
+</html>
+
+
